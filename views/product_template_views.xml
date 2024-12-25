@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Form View Modification: Adding Discount Percentage and Discounted Price -->
     <record id="product_template_form_view" model="ir.ui.view">
         <field name="name">product.template.form.inherit</field>
         <field name="model">product.template</field>
@@ -11,21 +12,8 @@
                     %
                     <field name="discount_percentage" nolabel="1" class="oe_inline" />
                 </div>
-                <field name="discounted_price" /> 
+                <field name="discounted_price"/> 
             </xpath>
         </field>
     </record>
-
-    <!-- <template id="product_price" inherit_id="website_sale.product">
-        <xpath expr="//span[@itemprop='price']" position="replace">
-            <t t-if="product.discount_percentage > 0">
-                <span class="oe_currency_value" t-field="product.discounted_price"/>
-                <span class="oe_currency_value" t-field="product.list_price" style="text-decoration: line-through;"/>
-            </t>
-            <t t-else="">
-                <span class="oe_currency_value" t-field="product.list_price"/>
-            </t>
-        </xpath>
-    </template> -->
-
 </odoo>

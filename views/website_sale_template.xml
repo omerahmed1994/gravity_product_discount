@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Website Product Price Modification: Adding Discount Information -->
+    <template id="product_price" inherit_id="website_sale.product_price">
+        <xpath expr="//span[hasclass('oe_price')]" position="before">
+            <!-- Display discount percentage if available in combination_info -->
+            <t t-if="combination_info['discount_percentage']">
+                <small class="d-block">
+                    Discount: <span t-out="combination_info['discount_percentage']"/> %
+                </small>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Website Product Item Ribbon: Adding Discount Ribbon to Product Cards -->
+    <template id="products_item" inherit_id="website_sale.products_item">
+        <xpath expr="//a[hasclass('oe_product_image_link')]" position="inside">
+            <!-- Determine the background class for the discount ribbon -->
+            <t t-set="discount_bg_class" t-value="'o_ribbon_left'"/>
+            <!-- Get the HTML class from the product ribbon if available -->
+            <t t-set="html_class" t-value="td_product.get('ribbon').html_class or ''"/>
+            <!-- Switch to 'o_ribbon_right' if the ribbon class contains 'o_ribbon_left' -->
+            <t t-if="html_class and 'o_ribbon_left' in html_class">
+                <t t-set="discount_bg_class" t-value="'o_ribbon_right'"/>
+            </t>
+            <!-- Display the discount ribbon if the product has a discount percentage -->
+            <span t-if="product.discount_percentage" t-attf-class="o_ribbon o_not_editable text-bg-danger #{discount_bg_class}">
+                <t t-esc="product.discount_percentage"/> %
+            </span>
+        </xpath>
+    </template>
+</odoo>
